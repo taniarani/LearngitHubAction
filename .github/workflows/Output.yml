@@ -6,6 +6,8 @@ jobs:
     defaults:
       run:
         working-directory: '04 Practice Project (Start)'  # All run: steps happen inside this folder
-  steps:
-    - name: output Github Context
-      run: echo "GitHub Context: ${{ toJson(github) }}"
+    steps:
+      - name: Output GitHub Context
+        run: |
+          echo "GitHub Context JSON:" 
+          echo '${{ toJSON(github) }}'
