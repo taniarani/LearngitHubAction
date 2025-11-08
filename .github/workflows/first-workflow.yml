@@ -5,7 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: print Tania
-        run: echo "Tania Good mornig"
+        run: |
+          echo "Tania Good morning"
+          echo "How are you Tania"
+          
       - name: Good bye Tania
         run: echo "Good Bye Tania"
 
