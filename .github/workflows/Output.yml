@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Verify working directory exists
       - name: Output GitHub Context
         run: |
           echo "GitHub Context JSON:" 
