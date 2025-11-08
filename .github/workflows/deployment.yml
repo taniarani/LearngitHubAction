@@ -1,42 +1,46 @@
-name: Deployment Project
-on: push
+name: Deployment Project  # The name that will show in the GitHub Actions list
+
+# 'on' defines when this workflow should run.
+# push              -> Runs every time you push commits.
+# workflow_dispatch -> Lets you manually trigger the workflow from the Actions tab.
+on: [push, workflow_dispatch]
 jobs:
   test:
-    name: Lint & Test (Node 18)
-    runs-on: ubuntu-latest
+    name: Lint & Test (Node 18)  # Human readable job name
+    runs-on: ubuntu-latest       # GitHub provides a fresh Ubuntu VM for this job
     defaults:
       run:
-        working-directory: '04 Practice Project (Start)'
+        working-directory: '04 Practice Project (Start)'  # All run: steps happen inside this folder (where package.json lives)
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Downloads your repo code onto the runner
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'npm'
-          cache-dependency-path: '04 Practice Project (Start)/package-lock.json'
+          node-version: 18                               # Use Node.js v18
+          cache: 'npm'                                   # Enable npm dependency caching for faster builds
+          cache-dependency-path: '04 Practice Project (Start)/package-lock.json'  # Path to lockfile for cache key
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci  # Clean, reproducible install using package-lock.json
 
       - name: Run linter
-        run: npm run lint
+        run: npm run lint  # Check code style / errors (fails job on serious issues)
 
       - name: Run tests
-        run: npm test
+        run: npm test  # Executes unit tests with Vitest
 
   deploy:
-    name: Build & Deploy
-    needs: test
+    name: Build & Deploy                  # Second job: only runs if tests pass
+    needs: test                           # Wait for 'test' job to finish successfully
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: '04 Practice Project (Start)'
+        working-directory: '04 Practice Project (Start)'  # Same project folder
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Need code again (jobs run in separate VMs)
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -46,12 +50,12 @@ jobs:
           cache-dependency-path: '04 Practice Project (Start)/package-lock.json'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci  # Same clean install before building
 
       - name: Build project
-        run: npm run build
+        run: npm run build  # Creates optimized production build in 'dist' folder
       - name: Deploy Project
-        run: echo "Project deployed successfully"
+        run: echo "Project deployed successfully"  # Placeholder: replace with real deploy step later (e.g. upload to Pages)
 
 
 
