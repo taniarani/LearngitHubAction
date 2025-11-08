@@ -3,6 +3,9 @@ on: workflow_dispatch
 jobs: 
   extract:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '04 Practice Project (Start)'  # All run: steps happen inside this folder
   steps:
     - name: output Github Context
       run: echo "GitHub Context: ${{ toJson(github) }}"
