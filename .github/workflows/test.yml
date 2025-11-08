@@ -1,19 +1,40 @@
-name: Test Project
-on: push
+name: Test Project CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  Run Test:
+  test:
+    name: Lint & Test (Node 18)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: '04 Practice Project (Start)'
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v3
-      - name: install node
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - name: install dependencies
+          cache: 'npm'
+          cache-dependency-path: '04 Practice Project (Start)/package-lock.json'
+
+      - name: Install dependencies
         run: npm ci
-      - name: Run Test
-        run: npm test
+
+      - name: Run linter
+        run: npm run lint --if-present
+
+      - name: Run tests
+        env:
+          CI: true
+        run: npm test -- --run --reporter=verbose
 
 
 
