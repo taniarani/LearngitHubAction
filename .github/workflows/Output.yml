@@ -5,8 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: '04 Practice Project (Start)'  # All run: steps happen inside this folder
+        working-directory: '04 Practice Project (Start)'  # Folder expected at repo root; we will verify it exists
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify working directory exists
       - name: Output GitHub Context
         run: |
           echo "GitHub Context JSON:" 
