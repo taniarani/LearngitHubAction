@@ -1,8 +1,5 @@
-name: Test Project CI
-
+name: Deployment Project
 on: push
-  
-
 jobs:
   test:
     name: Lint & Test (Node 18)
@@ -29,6 +26,27 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '04 Practice Project (Start)/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+      - name: Build project
+        run: npm run build
+      - name: Deploy Project
+        run: echo "Project deployed successfully"
+
 
 
 
