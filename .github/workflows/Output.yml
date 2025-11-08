@@ -1,0 +1,8 @@
+name: Meta-Data Extraction
+on: workflow_dispatch
+jobs: 
+  extract:
+    runs-on: ubuntu-latest
+  steps:
+    - name: output Github Context
+      run: echo "GitHub Context: ${{ toJson(github) }}"
