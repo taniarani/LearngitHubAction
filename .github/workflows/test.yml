@@ -7,6 +7,9 @@ jobs:
   test:
     name: Lint & Test (Node 18)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '04 Practice Project (Start)'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
