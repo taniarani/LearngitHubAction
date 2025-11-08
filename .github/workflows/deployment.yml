@@ -28,7 +28,12 @@ jobs:
         run: npm test
 
   deploy:
+    name: Build & Deploy
+    needs: test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '04 Practice Project (Start)'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -42,6 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
       - name: Build project
         run: npm run build
       - name: Deploy Project
